@@ -6,15 +6,7 @@ import AsyncStorage from '@react-native-community/async-storage';
 export class Login extends Component{
     
     static navigationOptions = {
-        title:"Login",
-        headerStyle:{
-            backgroundColor:'#f4511e'
-        },
-        headerTintColor:'#fff',
-        headerTitleStyle:{
-            fontWeight:'bold',
-            color:'white'
-        }
+        title:"Login"
     }
     
     constructor(props){
