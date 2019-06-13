@@ -1,8 +1,6 @@
 import React, { Component } from 'react';
-import { Text, View, TouchableOpacity, ScrollView, Image } from 'react-native';
+import { Text, View, TouchableOpacity, ScrollView, Image, Alert } from 'react-native';
 import AsyncStorage from '@react-native-community/async-storage';
-
-
 
 export class Home extends Component {
     static navigationOptions = ({ navigation }) => {
@@ -52,13 +50,23 @@ export class Home extends Component {
         this.props.navigation.navigate('AddEditView', {index:index,itemName:obj.item,itemQty:obj.qty,itemPrice:obj.price,itemKey:obj.key, backBtn:this.onReceiveData});
     }
 
+    showDeleteWarning = (index) => {
+        Alert.alert('Wait','Do you really want to delete this item',[
+            {text:'Yes', onPress:() =>{
+                let {items} = this.state;
+                items.splice(index,1);
+                this.setState({items:items});
+            }},
+            {text:'No'}
+        ], {cancelable:false})
+    }
 
 
     render() {
         return <ScrollView>
             {
                 this.state.items.map((obj,index)=>
-                    <TouchableOpacity key={obj.key} style={{flexDirection:'row', padding:10}} onPress={()=>this.onPressEdit(obj,index)}>
+                    <TouchableOpacity key={obj.key} style={{flexDirection:'row', padding:10}} onPress={()=>this.onPressEdit(obj,index)} onLongPress={()=>this.showDeleteWarning(index)}>
                         <Image source={{uri:'https://cdn3.iconfinder.com/data/icons/map-and-location-fill/144/Place_Shopping-512.png', width:60,height:60}} style={{flex:1}}/>
                         <Text style={{margin:20,fontWeight:'bold',flex:3}}>{obj.item}</Text>
                     </TouchableOpacity>

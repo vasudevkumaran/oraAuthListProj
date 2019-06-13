@@ -11,10 +11,14 @@ export class AddEdit extends Component{
     constructor(props){
         super(props)
         if (this.props.navigation.state.params.index == -1){
+            this.props.itemName = '';
+            this.props.itemPrice = '';
+            this.props.itemQty = '';
             this.state = {itemText:'',itemPrice:'',itemQty:''};
         }else{
             const {itemName,itemQty,itemPrice} = this.props.navigation.state.params;
             console.log(itemName+','+itemQty);
+            
             this.state = {itemText:itemName,itemPrice:itemPrice,itemQty:itemQty};
         }
         
@@ -35,18 +39,18 @@ export class AddEdit extends Component{
     render(){
         return <View style={{flex:1,justifyContent:'center',alignItems:'center'}}>
             <Text>Item Name</Text>
-            <TextInput placeholder="Enter Item name" value={this.props.navigation.getParam('itemName','')}
+            <TextInput placeholder="Enter Item name" value={this.state.itemText}
                 onChangeText={this.onChangeItemText}
                 style={{width:200,height:50,borderWidth:1, borderColor:'red', borderRadius:3, marginBottom: 10}}
             />
             <Text>Item Qty</Text>
-            <TextInput placeholder="Enter Item qty" value={this.props.navigation.getParam('itemQty','')}
-                onChangeText={this.onChangeItemQty}
+            <TextInput placeholder="Enter Item qty" value={this.state.itemQty}
+                onChangeText={this.onChangeItemQty} keyboardType='number-pad'
                 style={{width:200,height:50,borderWidth:1, borderColor:'red', borderRadius:3, marginBottom: 10}}
             />
             <Text>Item Price</Text>
-            <TextInput placeholder="Enter Item Price" value={this.props.navigation.getParam('itemPrice','')}
-                onChangeText={this.onChangeItemPrice} 
+            <TextInput placeholder="Enter Item Price" value={this.state.itemPrice}
+                onChangeText={this.onChangeItemPrice} keyboardType='number-pad'
                 style={{width:200,height:50,borderWidth:1, borderColor:'red', borderRadius:3, marginBottom: 10}}
             />
             <Button title="Save" onPress={this.onSave} />
